@@ -10,16 +10,16 @@ O projeto nasceu no primeiro ano da faculdade de Defesa Cibernética (FIAP), com
 
 ## Funcionalidades
 
-- **Cálculo de hash de arquivos baixados** — todo arquivo com atributo de quarentena (baixado da internet) tem seu hash SHA-256 calculado e registrado.
-- **Verificação de malware via VirusTotal** — o hash de cada arquivo é consultado na API pública do VirusTotal; arquivos identificados como maliciosos são automaticamente removidos e um alerta é exibido ao usuário.
-- **Monitoramento de arquivos sensíveis** — alterações em arquivos críticos do sistema (`/etc/sudoers`, `/etc/hosts`, preferências do macOS, usuários administradores) são detectadas por comparação de hash e notificadas em tempo real.
-- **Detecção de tentativas de login falhadas** — captura e registra tentativas de autenticação sem sucesso, identificando o usuário-alvo e o diretório envolvido.
-- **Alertas nativos do sistema** — notificações via `osascript`, sem necessidade de agentes ou serviços de terceiros.
-- **Logs estruturados com timestamp** — todas as ocorrências são persistidas em arquivos de log diários, prontos para auditoria ou para ingestão por outras ferramentas (SIEM, dashboards, etc.).
+- **Cálculo de hash de arquivos baixados** --> todo arquivo com atributo de quarentena (baixado da internet) tem seu hash SHA-256 calculado e registrado.
+- **Verificação de malware via VirusTotal** --> o hash de cada arquivo é consultado na API pública do VirusTotal; arquivos identificados como maliciosos são automaticamente removidos e um alerta é exibido ao usuário.
+- **Monitoramento de arquivos sensíveis** --> alterações em arquivos críticos do sistema (`/etc/sudoers`, `/etc/hosts`, preferências do macOS, usuários administradores) são detectadas por comparação de hash e notificadas em tempo real.
+- **Detecção de tentativas de login falhadas** --> captura e registra tentativas de autenticação sem sucesso, identificando o usuário-alvo e o diretório envolvido.
+- **Alertas nativos do sistema** --> notificações via `osascript`, sem necessidade de agentes ou serviços de terceiros.
+- **Logs estruturados com timestamp** --> todas as ocorrências são persistidas em arquivos de log diários, prontos para auditoria ou para ingestão por outras ferramentas (SIEM, dashboards, etc.).
 
 ## Motivação e arquitetura
 
-A proposta central do projeto é funcionar como um **client leve e instalável** em estações de trabalho corporativas, coletando eventos de segurança de diferentes fontes do sistema operacional (sistema de arquivos, autenticação, integridade de arquivos), normalizando essas informações em um formato de log consistente, e deixando-as prontas para serem encaminhadas a serviços externos de visualização e análise — permitindo que o time de segurança tenha visibilidade centralizada sobre o comportamento das máquinas da empresa.
+A proposta central do projeto é funcionar como um **client leve e instalável** em estações de trabalho corporativas, coletando eventos de segurança de diferentes fontes do sistema operacional (sistema de arquivos, autenticação, integridade de arquivos), normalizando essas informações em um formato de log consistente, e deixando-as prontas para serem encaminhadas a serviços externos de visualização e análise, permitindo que o time de segurança tenha visibilidade centralizada sobre o comportamento das máquinas da empresa.
 
 Por ser escrito inteiramente em shell script, o client roda nativamente em qualquer macOS sem necessidade de runtime, instalação de pacotes ou configuração de ambiente, o que reduz drasticamente a superfície de ataque e a complexidade de implantação em escala.
 
