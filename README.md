@@ -78,7 +78,3 @@ As principais variáveis podem ser ajustadas no início do script:
 ## Licença
 
 Este projeto é open-source e está disponível sob a licença MIT. Sinta-se livre para usar, modificar e distribuir.
-
-## Contexto do projeto
-
-Este projeto foi originalmente desenvolvido durante o primeiro ano de faculdade, pelo grupo **Vint Cerf Group**, como uma solução prática de monitoramento de segurança para a Trustly. O código-fonte completo foi posteriormente perdido, restando apenas um estágio inicial do desenvolvimento. Este repositório apresenta uma **reconstrução e adaptação** dessa versão inicial, feita para fins de portfólio, preservando o conceito e a lógica original do projeto.
