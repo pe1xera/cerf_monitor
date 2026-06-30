@@ -2,7 +2,7 @@
 
 Solução open-source, em shell script, para monitoramento da segurança das workstations da empresa Trustly. Trata-se do projeto de um client instalável que coleta logs de diversas fontes, normaliza e encaminha para outros serviços, a fim de que possam ser visualizados pelo time responsável pela tomada de decisões.
 
-<img width="796" height="540" alt="image" src="https://github.com/user-attachments/assets/3fff9019-2013-4c45-a668-a758c28fc4ff" />
+<img width="1179" height="660" alt="image" src="https://github.com/user-attachments/assets/2c14fca0-a6fb-4823-b5e9-d6d03a23fcae" />
 
 > **Nota:** este repositório contém uma **versão adaptada** do script original. **Não é a versão final apresentada à Trustly**, mas sim uma recriação para fins de portfólio, mantendo o mesmo conceito e a mesma lógica de funcionamento.
 
