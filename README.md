@@ -37,13 +37,13 @@ git clone https://github.com/seu-usuario/cerf_monitor.git
 cd cerf_monitor
 
 # Insira sua chave de API do VirusTotal no script
-sed -i '' 's/SUA_CHAVE_AQUI/sua_chave_real/' monitor_seguranca.sh
+sed -i '' 's/SUA_CHAVE_AQUI/sua_chave_real/' cerf_monitor.sh
 
 # Dê permissão de execução
-chmod +x monitor_seguranca.sh
+chmod +x cerf_monitor.sh
 
 # Execute o monitoramento
-./monitor_seguranca.sh
+./cerf_monitor.sh
 ```
 
 O script roda em loop contínuo, verificando o sistema em intervalos configuráveis (10 segundos por padrão), até ser interrompido com `Ctrl+C`.
