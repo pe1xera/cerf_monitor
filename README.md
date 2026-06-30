@@ -33,8 +33,8 @@ Por ser escrito inteiramente em shell script, o client roda nativamente em qualq
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/cerf-sentinel.git
-cd cerf-sentinel
+git clone https://github.com/seu-usuario/cerf_monitor.git
+cd cerf_monitor
 
 # Insira sua chave de API do VirusTotal no script
 sed -i '' 's/SUA_CHAVE_AQUI/sua_chave_real/' monitor_seguranca.sh
