@@ -18,7 +18,6 @@
 # -----------------------------------------------------------------------------
 # CONFIGURAÇÕES
 # -----------------------------------------------------------------------------
-
 apiKey="SUA_CHAVE_AQUI"
 
 arquivosSensiveis=(
@@ -31,6 +30,15 @@ diretoriosMonitorados=(
     "$HOME/Downloads"
     "$HOME/Desktop"
     "$HOME/Documents"
+)
+
+# Diretórios clássicos de persistência no macOS — monitorados recursivamente,
+# já que qualquer mudança neles é rara e quase sempre suspeita
+diretoriosPersistencia=(
+    "/Library/LaunchAgents"
+    "/Library/LaunchDaemons"
+    "$HOME/Library/LaunchAgents"
+    "/Library/StartupItems"
 )
 
 intervalo=10
@@ -211,7 +219,43 @@ monitorar_arquivos_sensiveis() {
 }
 
 # -----------------------------------------------------------------------------
-# FUNÇÃO 5 — DETECÇÃO DE TENTATIVAS DE LOGIN FALHADAS
+# FUNÇÃO 5 — MONITORAMENTO RECURSIVO DE DIRETÓRIOS DE PERSISTÊNCIA
+# -----------------------------------------------------------------------------
+monitorar_diretorios_persistencia() {
+    for diretorio in "${diretoriosPersistencia[@]}"; do
+        if [ ! -d "$diretorio" ]; then
+            continue
+        fi
+
+        local arquivoSnapshot="$diretorioRegistros/snapshot_${diretorio//\//_}.txt"
+
+        local snapshotAtual
+        snapshotAtual=$(find "$diretorio" -type f -exec shasum -a 256 {} \; 2>/dev/null \
+            | awk '{print $2"|"$1}' | sort)
+
+        if [ -f "$arquivoSnapshot" ]; then
+            local snapshotAnterior
+            snapshotAnterior=$(cat "$arquivoSnapshot")
+
+            local diferencas
+            diferencas=$(diff <(echo "$snapshotAnterior") <(echo "$snapshotAtual"))
+
+            if [ -n "$diferencas" ]; then
+                local mensagem="Alteração detectada em diretório de persistência: $diretorio"
+                log_terminal "⚠️  ALERTA — $mensagem"
+                registrar_log "$logModificacoes" "$mensagem | DETALHES: $diferencas"
+                exibir_alerta "⚠️ Alerta de Segurança" "$mensagem"
+            fi
+        else
+            log_terminal "INFO: Snapshot base registrado para $diretorio"
+        fi
+
+        echo "$snapshotAtual" > "$arquivoSnapshot"
+    done
+}
+
+# -----------------------------------------------------------------------------
+# FUNÇÃO 6 — DETECÇÃO DE TENTATIVAS DE LOGIN FALHADAS
 # -----------------------------------------------------------------------------
 capturar_falhas_login() {
     log show \
@@ -279,14 +323,17 @@ echo ""
 while true; do
     log_terminal "--- Iniciando ciclo de verificação ---"
 
-    log_terminal "[1/3] Verificando arquivos em quarentena..."
+    log_terminal "[1/4] Verificando arquivos em quarentena..."
     verificar_arquivos_quarentena
 
-    log_terminal "[2/3] Verificando tentativas de login falhadas..."
+    log_terminal "[2/4] Verificando tentativas de login falhadas..."
     capturar_falhas_login
 
-    log_terminal "[3/3] Verificando integridade dos arquivos sensíveis..."
+    log_terminal "[3/4] Verificando integridade dos arquivos sensíveis..."
     monitorar_arquivos_sensiveis
+
+    log_terminal "[4/4] Verificando diretórios de persistência..."
+    monitorar_diretorios_persistencia
 
     log_terminal "--- Ciclo concluído. Próxima verificação em ${intervalo}s ---"
     echo ""
